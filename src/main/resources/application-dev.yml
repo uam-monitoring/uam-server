@@ -1,5 +1,7 @@
 
 spring:
+  url:
+    base: http://34.64.245.87:8080
   datasource:  # mysql 사용
     url: jdbc:mysql://localhost:3306/uamdev?validationQuery="select 1"&useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=UTF-8&serverTimezone=UTC&useLegacyDatetimeCode=false
     username: root

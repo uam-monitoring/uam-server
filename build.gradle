@@ -19,6 +19,11 @@ repositories {
 }
 
 dependencies {
+	//kafka
+	implementation 'org.springframework.kafka:spring-kafka'
+	//test lombok 사용
+	testCompileOnly 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
 	//springdoc
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
 

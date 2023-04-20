@@ -34,4 +34,5 @@ public class ExceptionAdvice {
         e.printStackTrace();
         return new ResponseEntity<>(new ErrorResponseDto(errorCode, message), errorCode.getStatusCode());
     }
+
 }

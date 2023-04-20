@@ -10,7 +10,6 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Builder
-@ToString
 public class Uam {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

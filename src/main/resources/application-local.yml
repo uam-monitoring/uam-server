@@ -18,17 +18,28 @@ spring:
         format_sql: true
         hbm2ddl:
           auto: create
-#    defer-datasource-initialization: true #더미데이터 용
+    defer-datasource-initialization: true #더미데이터 용
     show-sql: true
   data:
     redis:
       host: localhost
       port: 6379
-#  sql: #더미데이터 용
-#    init:
-#      mode: always
-#      data-locations: classpath:data.sql
-#      encoding: UTF-8
+  sql: #더미데이터 용
+    init:
+      mode: always
+      data-locations: classpath:data.sql
+      encoding: UTF-8
+  kafka:
+    consumer:
+      bootstrap-servers: 34.64.50.119:9092
+      group-id: foo
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      bootstrap-servers: 34.64.50.119:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
 springdoc:
   use-fqn: true # 정규화된 스키마명 사용 설정

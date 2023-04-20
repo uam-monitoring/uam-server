@@ -39,7 +39,7 @@ spring:
     producer:
       bootstrap-servers: 34.64.50.119:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
 springdoc:
   use-fqn: true # 정규화된 스키마명 사용 설정

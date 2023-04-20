@@ -30,12 +30,6 @@ spring:
       data-locations: classpath:data.sql
       encoding: UTF-8
   kafka:
-    consumer:
-      bootstrap-servers: 34.64.50.119:9092
-      group-id: foo
-      auto-offset-reset: earliest
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
     producer:
       bootstrap-servers: 34.64.50.119:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer

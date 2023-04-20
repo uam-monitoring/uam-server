@@ -2,18 +2,20 @@ package um.uamserver.domain;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 import um.uamserver.domain.entity.RealTimePoint;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
-@Slf4j
 public class RealTimePointProducer {
-    private static final String TOPIC = "testtopic";
+    private static final String TOPIC = "test2";
     private final KafkaTemplate<String, Object> kafkaTemplate;
-    public void sendMessage(RealTimePoint point) {
-        log.info("Produce message : {}", point);
-        this.kafkaTemplate.send(TOPIC, point);
+
+    public synchronized void sendMessage(DataFormat data) {
+        log.info("Produce message : {}", data);
+        this.kafkaTemplate.send(TOPIC, data);
     }
 }

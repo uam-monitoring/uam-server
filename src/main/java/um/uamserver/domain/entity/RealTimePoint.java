@@ -1,5 +1,6 @@
 package um.uamserver.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,7 +11,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Builder
-@ToString
 public class RealTimePoint {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +21,7 @@ public class RealTimePoint {
     double velocity;
     LocalDateTime time;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn
     Uam uam;

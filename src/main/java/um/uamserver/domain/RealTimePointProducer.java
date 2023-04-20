@@ -11,9 +11,9 @@ import um.uamserver.domain.entity.RealTimePoint;
 @Slf4j
 public class RealTimePointProducer {
     private static final String TOPIC = "testtopic";
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, Object> kafkaTemplate;
     public void sendMessage(RealTimePoint point) {
         log.info("Produce message : {}", point);
-        this.kafkaTemplate.send(TOPIC, "point");
+        this.kafkaTemplate.send(TOPIC, point);
     }
 }

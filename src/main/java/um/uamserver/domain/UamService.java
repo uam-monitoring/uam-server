@@ -2,47 +2,45 @@ package um.uamserver.domain;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import um.uamserver.domain.entity.RealTimePoint;
-import um.uamserver.domain.entity.Uam;
+import um.uamserver.domain.dto.FlightScheduleDto;
+import um.uamserver.domain.dto.VertiportDto;
+import um.uamserver.domain.dto.WayPointDto;
+import um.uamserver.domain.entity.flight_schedule.FlightSchedule;
+import um.uamserver.domain.entity.uam.RealTimePoint;
+import um.uamserver.domain.entity.uam.Uam;
+import um.uamserver.domain.entity.vertiport.Vertiport;
+import um.uamserver.domain.entity.vertiport.VertiportType;
 import um.uamserver.global.error.exception.CResourceNotFoundException;
 
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
-
-import static java.lang.Thread.sleep;
+import java.util.Map;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class UamService {
     private final UamRepository uamRepository;
-    private final ExecutorService executorService;
     private final RealTimePointProducer producer;
+
+    @Async
     public void depart(Long uamId) {
         Uam uam = uamRepository.findById(uamId).orElseThrow(CResourceNotFoundException::new);
         List<RealTimePoint> route = uam.getRoute();
-        log.info("start " +  uamId);
-        executorService.submit(() -> {
-            send(route);
-            log.info("{}번 UAM 주행 완료", uamId);
-        });
+        log.info("start - {}", uamId);
+        producer.send(route);
     }
 
-    private void send(List<RealTimePoint> route) {
-        for (RealTimePoint point : route) {
-            producer.sendMessage(new DataFormat(point));
-            trySleep(TimeUnit.MILLISECONDS.convert(1, TimeUnit.SECONDS));
-        }
-    }
-
-    private void trySleep(long milli) {
-        try {
-            sleep(milli);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+    public FlightScheduleDto getFlightSchedule(Long uamId) {
+        Uam uam = uamRepository.findById(uamId).orElseThrow(CResourceNotFoundException::new);
+        FlightSchedule flightSchedule = uam.getFlightSchedule();
+        Map<VertiportType, Vertiport> vertiports = flightSchedule.getVertiports();
+        VertiportDto departure = new VertiportDto(vertiports.get(VertiportType.DEPARTURE));
+        VertiportDto arrival = new VertiportDto(vertiports.get(VertiportType.ARRIVAL));
+        List<WayPointDto> points = flightSchedule.getRoute().stream()
+                .map(WayPointDto::new)
+                .toList();
+        return new FlightScheduleDto(departure, arrival, points);
     }
 }

@@ -7,10 +7,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import um.uamserver.domain.dto.FlightScheduleDto;
 
 @Tag(name = "[UamController]")
 @RestController
@@ -25,5 +23,12 @@ public class UamController {
     public ResponseEntity<Void> depart(@PathVariable Long uamId){
         uamService.depart(uamId);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(summary="계획 경로 조회", description="")
+    @GetMapping("/schedule/uam/{uamId}")
+    public ResponseEntity<FlightScheduleDto> getFlightSchedule(@PathVariable Long uamId){
+        FlightScheduleDto responseDto = uamService.getFlightSchedule(uamId);
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 }

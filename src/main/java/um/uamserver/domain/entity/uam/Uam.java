@@ -1,7 +1,8 @@
-package um.uamserver.domain.entity;
+package um.uamserver.domain.entity.uam;
 
 import jakarta.persistence.*;
 import lombok.*;
+import um.uamserver.domain.entity.flight_schedule.FlightSchedule;
 
 import java.util.List;
 
@@ -16,5 +17,9 @@ public class Uam {
     private Long id;
 
     @OneToMany(mappedBy = "uam", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    List<RealTimePoint> route;
+    private List<RealTimePoint> route;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn
+    private FlightSchedule flightSchedule;
 }

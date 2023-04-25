@@ -1,7 +1,30 @@
+
+insert into flight_schedule(id, arrival_time, departure_time)
+values (1, '2023-04-20 11:31:14.982873', '2023-04-20 11:31:14.982873'),
+       (2, '2023-04-20 11:31:14.982873', '2023-04-20 11:31:14.982873');
+
+insert into way_point(id, altitude, latitude, longitude, flight_schedule_id)
+values (1, 100, 128.601445, 35.871435, 1),
+       (2, 200, 128.601445, 35.871435, 1),
+       (3, 300, 128.601445, 35.871435, 1),
+       (4, 400, 128.601445, 35.871435, 1),
+       (5, 500, 128.601445, 35.871435, 1),
+       (6, 600, 128.601445, 35.871435, 2),
+       (7, 700, 128.601445, 35.871435, 2),
+       (8, 800, 128.601445, 35.871435, 2),
+       (9, 900, 128.601445, 35.871435, 2),
+       (10, 1000, 128.601445, 35.871435, 2);
+
+insert into vertiport(id, latitude, longitude, name, flight_schedule_id, vertiports_key)
+values (1, 128.601445, 35.871435, 'vertiport-A', 1, 'DEPARTURE'),
+       (2, 128.601445, 35.871435, 'vertiport-B', 1, 'ARRIVAL'),
+       (3, 128.601445, 35.871435, 'vertiport-A', 2, 'DEPARTURE'),
+       (4, 128.601445, 35.871435, 'vertiport-C', 2, 'ARRIVAL');
+
 -- <UAM> --
-insert into uam (id)
-values (1),
-       (2);
+insert into uam (id, flight_schedule_id)
+values (1, 1),
+       (2, 2);
 
 insert into real_time_point(id, altitude, latitude, longitude, time, velocity, uam_id)
 values (1, 100, 128.601445, 35.871435, '2023-04-20 11:31:14.982873', 300, 1),

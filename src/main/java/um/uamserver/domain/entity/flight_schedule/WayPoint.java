@@ -1,8 +1,10 @@
-package um.uamserver.domain.entity;
+package um.uamserver.domain.entity.flight_schedule;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -11,18 +13,15 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Builder
-public class RealTimePoint {
+public class WayPoint {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     double altitude;
     double longitude;
     double latitude;
-    double velocity;
-    LocalDateTime time;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn
-    Uam uam;
+    FlightSchedule flightSchedule;
 }

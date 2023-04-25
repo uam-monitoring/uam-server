@@ -1,9 +1,9 @@
-package um.uamserver.domain;
+package um.uamserver.domain.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import um.uamserver.domain.entity.RealTimePoint;
+import um.uamserver.domain.entity.uam.RealTimePoint;
 
 import java.time.LocalDateTime;
 

@@ -2,11 +2,11 @@ package um.uamserver.domain;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-import um.uamserver.domain.entity.RealTimePoint;
+import um.uamserver.domain.dto.DataFormat;
+import um.uamserver.domain.entity.uam.RealTimePoint;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;

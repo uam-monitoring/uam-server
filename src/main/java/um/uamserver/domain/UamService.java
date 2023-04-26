@@ -24,6 +24,11 @@ public class UamService {
     private final UamRepository uamRepository;
     private final RealTimePointProducer producer;
 
+    /**
+     * UAM을 출발시킵니다.
+     *
+     * @param uamId UAM 아이디넘버
+     */
     @Async
     public void depart(Long uamId) {
         Uam uam = uamRepository.findById(uamId).orElseThrow(CResourceNotFoundException::new);
@@ -32,6 +37,12 @@ public class UamService {
         producer.send(route);
     }
 
+    /**
+     * UAM의 계획 경로 정보를 조회합니다.
+     *
+     * @param uamId UAM 아이디넘버
+     * @return 계획 경로 정보
+     */
     public FlightScheduleDto getFlightSchedule(Long uamId) {
         Uam uam = uamRepository.findById(uamId).orElseThrow(CResourceNotFoundException::new);
         FlightSchedule flightSchedule = uam.getFlightSchedule();

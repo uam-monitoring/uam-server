@@ -35,12 +35,6 @@ public class UamService {
     public FlightScheduleDto getFlightSchedule(Long uamId) {
         Uam uam = uamRepository.findById(uamId).orElseThrow(CResourceNotFoundException::new);
         FlightSchedule flightSchedule = uam.getFlightSchedule();
-        Map<VertiportType, Vertiport> vertiports = flightSchedule.getVertiports();
-        VertiportDto departure = new VertiportDto(vertiports.get(VertiportType.DEPARTURE));
-        VertiportDto arrival = new VertiportDto(vertiports.get(VertiportType.ARRIVAL));
-        List<WayPointDto> points = flightSchedule.getRoute().stream()
-                .map(WayPointDto::new)
-                .toList();
-        return new FlightScheduleDto(departure, arrival, points);
+        return new FlightScheduleDto(flightSchedule);
     }
 }

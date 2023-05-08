@@ -20,7 +20,7 @@ public class AdsbData {
 
     public AdsbData(RealTimePoint point){
         LocalDateTime time = point.getTime();
-        this.flightIdentifier = new FlightIdentifier(point.getId());
+        this.flightIdentifier = new FlightIdentifier(point.getUam().getUamIdentifier());
         this.currentTime = new CurrentTime(time.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), time.format(DateTimeFormatter.ofPattern("HH:mm:ss")), "UTC");
         this.currentPosition = new CurrentPosition(point.getAltitude(), point.getLatitude(), point.getLongitude());
     }
@@ -28,7 +28,7 @@ public class AdsbData {
     @NoArgsConstructor
     @AllArgsConstructor
     static class FlightIdentifier{
-        Long uamIdentification;
+        String uamIdentification;
     }
     @Getter
     @NoArgsConstructor

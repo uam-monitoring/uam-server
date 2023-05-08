@@ -22,9 +22,9 @@ values (1, 128.601445, 35.871435, 'vertiport-A', 1, 'DEPARTURE'),
        (4, 128.601445, 35.871435, 'vertiport-C', 2, 'ARRIVAL');
 
 -- <UAM> --
-insert into uam (id, flight_schedule_id)
-values (1, 1),
-       (2, 2);
+insert into uam (id, flight_schedule_id, uam_identifier)
+values (1, 1, 'UAM123'),
+       (2, 2, 'UAM456');
 
 insert into real_time_point(id, altitude, latitude, longitude, time, velocity, uam_id)
 values (1, 0, 128.601445, 35.871435, '2023-04-20 11:31:14.982873', 300, 1),

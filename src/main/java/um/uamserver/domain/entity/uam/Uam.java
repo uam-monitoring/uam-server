@@ -16,6 +16,8 @@ public class Uam {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String uamIdentifier;
+
     @OneToMany(mappedBy = "uam", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<RealTimePoint> route;
 

@@ -18,7 +18,6 @@ public class RealTimePoint {
     double altitude;
     double longitude;
     double latitude;
-    double velocity;
     LocalDateTime time;
 
     @JsonIgnore

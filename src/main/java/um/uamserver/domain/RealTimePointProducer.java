@@ -27,8 +27,9 @@ public class RealTimePointProducer {
             trySleep(TimeUnit.MILLISECONDS.convert(1, TimeUnit.SECONDS));
             sendMessage(new AdsbData(point));
         }
-        log.info("end");
-        return null;
+        CompletableFuture<Void> object = new CompletableFuture<>();
+        object.complete(null);
+        return object;
     }
 
     private void sendMessage(AdsbData data) {

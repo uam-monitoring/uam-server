@@ -1,12 +1,19 @@
 package um.uamserver.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientRequestException;
+import reactor.core.publisher.Mono;
 import um.uamserver.domain.dto.FlightScheduleDto;
 import um.uamserver.domain.dto.VertiportDto;
 import um.uamserver.domain.dto.WayPointDto;
@@ -20,6 +27,7 @@ import um.uamserver.global.error.exception.CResourceNotFoundException;
 import java.util.Base64;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 @Slf4j
@@ -27,6 +35,8 @@ import java.util.Map;
 public class UamService {
     private final UamRepository uamRepository;
     private final RealTimePointProducer producer;
+    private static final String ARRIVAL_API = "34.64.73.86:8080/completeFlight";
+    private static final String TEMP_API = "http://localhost:8081/api/test";
 
     /**
      * UAM을 출발시킵니다.
@@ -39,16 +49,19 @@ public class UamService {
         List<RealTimePoint> route = uam.getRoute();
         log.info("start - {}", uamId);
         producer.send(route).thenRun(() -> {
-            WebClient webClient = WebClient.create();
-            webClient.get()
-                    .uri(uriBuilder -> uriBuilder
-                            .path("34.64.73.86:8080/completeFlight")
-                            .queryParam("uamIdentification", uam.getUamIdentifier())
-                            .build())
-                    .retrieve()
-                    .bodyToMono(Void.class)
-                    .block();
-            log.info("진짜 끝");
+            try {
+                WebClient webClient = WebClient.create();
+                RequestDto requestDto = new RequestDto("ABC");
+                webClient.method(HttpMethod.POST)
+                        .uri(TEMP_API)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .bodyValue(requestDto)
+                        .retrieve()
+                        .bodyToMono(Void.class)
+                        .block();
+            } catch (WebClientRequestException e) {
+                e.printStackTrace();
+            }
         });
     }
 
@@ -62,5 +75,13 @@ public class UamService {
         Uam uam = uamRepository.findById(uamId).orElseThrow(CResourceNotFoundException::new);
         FlightSchedule flightSchedule = uam.getFlightSchedule();
         return new FlightScheduleDto(flightSchedule);
+    }
+
+
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Getter
+    static class RequestDto {
+        String uamIdentification;
     }
 }

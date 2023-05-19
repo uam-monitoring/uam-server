@@ -11,7 +11,7 @@ spring:
       connection-test-query: select 1 from dual
   jpa:  # jpa 사용시 추가
     database: mysql
-    database-platform: org.hibernate.dialect.MariaDB106Dialect
+    database-platform: org.hibernate.dialect.MySQL8Dialect
     properties:
       hibernate:
         jdbc:
@@ -20,11 +20,22 @@ spring:
         format_sql: true
         hbm2ddl:
           auto: create
+    defer-datasource-initialization: true #더미데이터 용
     show-sql: true
   data:
     redis:
       host: localhost
       port: 6379
+  sql: #더미데이터 용
+    init:
+      mode: always
+      data-locations: classpath:data.sql
+      encoding: UTF-8
+  kafka:
+    producer:
+      bootstrap-servers: 34.64.73.86:9092 # 원본 서버
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
 springdoc:
   use-fqn: true # 정규화된 스키마명 사용 설정
@@ -32,4 +43,4 @@ springdoc:
     enabled: true
   swagger-ui:
     display-request-duration: true  # try it out 을 했을 때 request duration 을 추가로 찍어줌
-    tags-sorter: alpha # @Tag를 알파벳 순으로 정렬
+    tags-sorter: alpha # @Tag를 알파벳 순으로

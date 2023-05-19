@@ -9,6 +9,7 @@ import um.uamserver.domain.dto.AdsbData;
 import um.uamserver.domain.entity.uam.RealTimePoint;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 import static java.lang.Thread.sleep;
@@ -17,16 +18,17 @@ import static java.lang.Thread.sleep;
 @Component
 @RequiredArgsConstructor
 public class RealTimePointProducer {
-    private static final String TOPIC = "test2";
+    private static final String TOPIC = "uam-topic";
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
     @Async
-    void send(List<RealTimePoint> route) {
+    public CompletableFuture<Void> send(List<RealTimePoint> route) {
         for (RealTimePoint point : route) {
             trySleep(TimeUnit.MILLISECONDS.convert(1, TimeUnit.SECONDS));
             sendMessage(new AdsbData(point));
         }
         log.info("end");
+        return null;
     }
 
     private void sendMessage(AdsbData data) {

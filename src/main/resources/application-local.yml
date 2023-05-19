@@ -31,9 +31,10 @@ spring:
       encoding: UTF-8
   kafka:
     producer:
-      bootstrap-servers: 34.64.50.119:9092
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+     bootstrap-servers: 34.64.73.86:9092 # 원본 서버
+#      bootstrap-servers: 34.64.50.119:9092 # 테스트 서버
+     key-serializer: org.apache.kafka.common.serialization.StringSerializer
+     value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
 springdoc:
   use-fqn: true # 정규화된 스키마명 사용 설정
@@ -41,4 +42,4 @@ springdoc:
     enabled: true
   swagger-ui:
     display-request-duration: true  # try it out 을 했을 때 request duration 을 추가로 찍어줌
-    tags-sorter: alpha # @Tag를 알파벳 순으로 정렬
+    tags-sorter: alpha # @Tag를 알파벳 순으로

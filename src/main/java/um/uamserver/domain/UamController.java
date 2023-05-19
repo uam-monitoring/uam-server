@@ -36,4 +36,16 @@ public class UamController {
         FlightScheduleDto responseDto = uamService.getFlightSchedule(uamId);
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
+
+    @Operation(summary = "테스트", description = "")
+    @PostMapping("/test")
+    public ResponseEntity<?> test(@RequestBody RequestDto requestDto) {
+        log.info("테스트 메서드 호출 완료 : {}", requestDto.getUamIdentification());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @NoArgsConstructor
+    @Getter
+    static class RequestDto {
+        String uamIdentification;
+    }
 }

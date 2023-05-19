@@ -36,7 +36,7 @@ public class UamService {
     private final UamRepository uamRepository;
     private final RealTimePointProducer producer;
     private static final String ARRIVAL_API = "34.64.73.86:8080/completeFlight";
-    private static final String TEMP_API = "http://localhost:8081/api/test";
+    private static final String TEMP_API = "http://localhost:8080/api/test";
 
     /**
      * UAM을 출발시킵니다.

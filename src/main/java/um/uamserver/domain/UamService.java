@@ -35,7 +35,7 @@ import java.util.concurrent.CompletableFuture;
 public class UamService {
     private final UamRepository uamRepository;
     private final RealTimePointProducer producer;
-    private static final String ARRIVAL_API = "34.64.73.86:8080/completeFlight";
+    private static final String ARRIVAL_API = "http://34.64.73.86:8080/completeFlight";
     private static final String TEMP_API = "http://localhost:8080/api/test";
 
     /**
@@ -51,14 +51,15 @@ public class UamService {
         producer.send(route).thenRun(() -> {
             try {
                 WebClient webClient = WebClient.create();
-                RequestDto requestDto = new RequestDto("ABC");
+                RequestDto requestDto = new RequestDto(uam.getUamIdentifier());
                 webClient.method(HttpMethod.POST)
-                        .uri(TEMP_API)
+                        .uri(ARRIVAL_API)
                         .contentType(MediaType.APPLICATION_JSON)
                         .bodyValue(requestDto)
                         .retrieve()
                         .bodyToMono(Void.class)
                         .block();
+                log.info("도착 메서드 호출 완료");
             } catch (WebClientRequestException e) {
                 e.printStackTrace();
             }

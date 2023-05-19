@@ -27,12 +27,14 @@ public class AdsbData {
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
+    @ToString
     static class FlightIdentifier{
         String uamIdentification;
     }
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
+    @ToString
     static class CurrentTime{
         String date;
         String time;
@@ -41,6 +43,7 @@ public class AdsbData {
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
+    @ToString
     static class CurrentPosition{
         double altitude;
         double longitude;
